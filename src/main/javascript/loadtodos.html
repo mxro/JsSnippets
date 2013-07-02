@@ -23,24 +23,24 @@
             });
             
             toDoList.get(function(node) {
-                console.log("Got it!");
+                console.log("Got it (node)!");
                // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
             });
             
             var aListIdLink = 'http://slicnet.com/seed1/seed1/7/6/2/5/h/sd/aListId';
             var aListId = session.node(aListIdLink);
             
-            var aTitleValueLink = 'http://slicnet.com/seed1/seed1/
+            var aTitleValueLink = 'http://slicnet.com/seed1/seed1/7/5/7/1/h/sd';
             var aTitleValue = session.node(aTitleValueLink);
             var aCompletionFlagLink = 'http://slicnet.com/seed1/seed1/7/6/2/3/h/sd/aCompletionFlag';
             var aCompletionFlag = session.node(aCompletionFlagLink);
             
             toDoList.selectAll(aListId).get(function(nodelist){
                 //clearing the current todolist
-                var l = todos.length;
-                while(l--){
-                    todos.splice(l,1);
-                }
+               // var l = todos.length;
+               // while(l--){
+              //      todos.splice(l,1);
+              //  }
 
                 //loading the todolist retrieved from appjangle to the UI
                 for (var count=0;count<nodelist.nodes().length;count++){
@@ -54,7 +54,7 @@
                     });
                     
                     toDoList.get(function(node) {
-                        console.log("Got it!");
+                        console.log("Got it! (node)");
                        // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
                     });
                     
@@ -64,11 +64,11 @@
                         console.log(node.value());
                         completionFlagVal = node.value();
                     });
-                    todos.push({
-                        id : uid,
-                        title : valu,
-                        completed : completionFlagVal
-                    });
+                   // todos.push({
+                   //     id : uid,
+                   //     title : valu,
+                  //      completed : completionFlagVal
+                   // });
                        //console.log(nodeList[count].url());
                       // console.log(nodeList[count].select(aTitleValue));
                       }
