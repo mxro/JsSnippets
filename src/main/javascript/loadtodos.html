@@ -14,8 +14,7 @@
             // your JS here, use Nextweb.io API (http://nextweb.io)
             var session = Nextweb.createSession();
             
-           
-            var urlValue = "http://slicnet.com/seed1/seed1/8/2/2/1/h/sd/79882581";
+            var urlValue = "http://slicnet.com/seed1/seed1/8/2/2/1/h/sd";
             toDoList = session.node(urlValue); //loading todolist from appjangle
             toDoList.catchExceptions(function(r) {
                 console.log("Exception reported! "+r.exception);
@@ -23,7 +22,7 @@
             });
             
             toDoList.get(function(node) {
-                console.log("Got it (node)!");
+                console.log("Got the todo list node: "+node.uri());
                // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
             });
             
@@ -37,47 +36,34 @@
             
             var todosquery =  toDoList.selectAll(aListId);
             
-            todosquery.catchExceptions(function(r) {
+            todosquery.getExceptionManager().catchExceptions(function(r) {
             	console.log("Went wrong "+r.exception);
             });
             
            todosquery.get(function(nodelist){
                 //clearing the current todolist
-               // var l = todos.length;
-               // while(l--){
-              //      todos.splice(l,1);
-              //  }
+                console.log("got the to list items: "+nodelist.values());
 
                 //loading the todolist retrieved from appjangle to the UI
                 for (var count=0;count<nodelist.nodes().length;count++){
-                    var todoCurrNode = nodelist.nodes()[count];
-                    var uid= todoCurrNode.value();              
+                    var todoCurrNode = nodelist.nodes()[count];        
                     //
                     var titleValNode = todoCurrNode.select(aTitleValue);
-                    titleValNode.catchExceptions(function(r) {
-                        console.log("Exception reported! "+r.exception);
-                        alert("Wrong title Value node");//exception handling if todolist url is incorrect
-                    });
-                    
-                    toDoList.get(function(node) {
-                        console.log("Got it! (node)");
-                       // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
-                    });
-                    
                     var completionFlagNode = todoCurrNode.select(aCompletionFlag);
                     
-                    completionFlagNode.get(function(node) {
-                        console.log(node.value());
-                        completionFlagVal = node.value();
+                    session.getAll(titleValNode, completionFlagNode, function(titleValNode, completionFlagNode) {
+                    	completionFlagVal = completionFlagNode.value();
+                    	
+                    	console.log("ready for push:\n"+
+                    			"  id: "+todoCurrNode.value()+"\n"+
+                    			"  title: "+titleValNode.value())+"\n"+
+                    			"  completed: "+completionFlagNode.value());
+                    	
                     });
-                   // todos.push({
-                   //     id : uid,
-                   //     title : valu,
-                  //      completed : completionFlagVal
-                   // });
-                       //console.log(nodeList[count].url());
-                      // console.log(nodeList[count].select(aTitleValue));
-                      }
+                    
+                    
+                    
+                   
             });
             
         };
