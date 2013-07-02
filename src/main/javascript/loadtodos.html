@@ -35,7 +35,13 @@
             var aCompletionFlagLink = 'http://slicnet.com/seed1/seed1/7/6/2/3/h/sd/aCompletionFlag';
             var aCompletionFlag = session.node(aCompletionFlagLink);
             
-            toDoList.selectAll(aListId).get(function(nodelist){
+            var todosquery =  toDoList.selectAll(aListId);
+            
+            todosquery.catchExceptions(function(r) {
+            	console.log("Went wrong "+r.exception);
+            });
+            
+           todosquery.get(function(nodelist){
                 //clearing the current todolist
                // var l = todos.length;
                // while(l--){
