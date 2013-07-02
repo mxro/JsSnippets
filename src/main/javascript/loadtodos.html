@@ -1,0 +1,83 @@
+<!-- one.upload https://u1.linnk.it/qc8sbw/usr/apps/textsync/files/loadtodospage -->
+
+<html>
+<head>
+<title>App</title>
+</head>
+<body>
+
+    <script
+        src="http://appjangle.com/js/v01/appjangle/appjangle.nocache.js"></script>
+
+    <script>
+        window.onNextwebOnedb = function() {
+            // your JS here, use Nextweb.io API (http://nextweb.io)
+            var session = Nextweb.createSession();
+            
+           
+            var urlValue = "http://slicnet.com/seed1/seed1/8/2/2/1/h/sd/79882581";
+            toDoList = session.node(urlValue); //loading todolist from appjangle
+            toDoList.catchExceptions(function(r) {
+                console.log("Exception reported! "+r.exception);
+                alert("Please enter a valid todolist Url and reload");//exception handling if todolist url is incorrect
+            });
+            
+            toDoList.get(function(node) {
+                console.log("Got it!");
+               // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
+            });
+            
+            var aListIdLink = 'http://slicnet.com/seed1/seed1/7/6/2/5/h/sd/aListId';
+            var aListId = session.node(aListIdLink);
+            
+            var aTitleValueLink = 'http://slicnet.com/seed1/seed1/
+            var aTitleValue = session.node(aTitleValueLink);
+            var aCompletionFlagLink = 'http://slicnet.com/seed1/seed1/7/6/2/3/h/sd/aCompletionFlag';
+            var aCompletionFlag = session.node(aCompletionFlagLink);
+            
+            toDoList.selectAll(aListId).get(function(nodelist){
+                //clearing the current todolist
+                var l = todos.length;
+                while(l--){
+                    todos.splice(l,1);
+                }
+
+                //loading the todolist retrieved from appjangle to the UI
+                for (var count=0;count<nodelist.nodes().length;count++){
+                    var todoCurrNode = nodelist.nodes()[count];
+                    var uid= todoCurrNode.value();              
+                    //
+                    var titleValNode = todoCurrNode.select(aTitleValue);
+                    titleValNode.catchExceptions(function(r) {
+                        console.log("Exception reported! "+r.exception);
+                        alert("Wrong title Value node");//exception handling if todolist url is incorrect
+                    });
+                    
+                    toDoList.get(function(node) {
+                        console.log("Got it!");
+                       // document.all('statuslabel').innerHTML = "Appjangle URL: "+ urlValue;              
+                    });
+                    
+                    var completionFlagNode = todoCurrNode.select(aCompletionFlag);
+                    
+                    completionFlagNode.get(function(node) {
+                        console.log(node.value());
+                        completionFlagVal = node.value();
+                    });
+                    todos.push({
+                        id : uid,
+                        title : valu,
+                        completed : completionFlagVal
+                    });
+                       //console.log(nodeList[count].url());
+                      // console.log(nodeList[count].select(aTitleValue));
+                      }
+            });
+            
+        };
+    </script>
+</body>
+
+</html>
+
+<!-- one.end -->
